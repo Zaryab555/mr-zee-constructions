@@ -24,14 +24,13 @@ if (form) {
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const name = document.getElementById('customerName').value;
-    const phone = document.getElementById('customerPhone').value;
-    const postcode = document.getElementById('customerPostcode').value;
+    const name = document.getElementById('customerName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    const postcode = document.getElementById('customerPostcode').value.trim();
     const service = document.getElementById('customerService').value;
-    const details = document.getElementById('jobDetails').value;
+    const details = document.getElementById('jobDetails').value.trim();
 
-    const message =
-`Hello Mr. Zee Constructions,
+    const message = `Hello Mr. Zee Constructions,
 
 I would like a free quotation.
 
