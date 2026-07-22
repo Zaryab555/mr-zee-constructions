@@ -1,0 +1,9 @@
+MR. ZEE CONSTRUCTIONS — UPLOAD INSTRUCTIONS
+
+1. Open your GitHub repository: mr-zee-constructions
+2. Upload everything inside this folder, including the complete assets folder.
+3. Choose "Commit changes".
+4. Wait 2–5 minutes and refresh https://mrzeeconstructions.co.uk
+5. On your phone, use an incognito/private tab if the old version is cached.
+
+Important: Upload the assets folder as well, otherwise the project photographs will not display.
