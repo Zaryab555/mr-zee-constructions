@@ -1,15 +1,13 @@
-MR. ZEE CONSTRUCTIONS WEBSITE UPGRADE
+GALLERY UPDATE
 
-Included:
-- Responsive professional homepage
-- WhatsApp quotation form
-- Basic guide price estimator
-- Reviews section
-- FAQ section
-- Service areas
-- Local SEO metadata and schema
-- Mobile menu
-- Contact and WhatsApp buttons
+Upload this index.html to your GitHub repository and replace the existing index.html.
 
-Upload index.html to the website public_html folder, replacing the old index file.
-Before publishing, replace placeholder reviews and gallery blocks with genuine customer reviews and real project photos.
+The gallery now uses these existing repository images:
+project-1.jpg
+project-3.jpg
+project-4.jpg
+project-6.jpg
+project-7.jpg
+project-8.jpg
+
+Do not delete or rename those image files.
