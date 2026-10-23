@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#071a33">
+<title>Owner Dashboard | Mr Zee Constructions</title>
+<script src="site-config.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="dynamic-site.js" defer></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;color:#152338;background:#f4f6fa;font:16px/1.5 Arial,sans-serif}
+[hidden]{display:none!important}
+header{background:#071a33;color:white;padding:22px max(18px,calc((100vw - 930px)/2))}
+header a{color:#ffc400;font-weight:700;text-decoration:none}
+header h1{margin:0;font-size:25px;color:white}
+header p{margin:5px 0 0}
+main{max-width:880px;margin:32px auto 70px;padding:0 16px}
+.panel,.admin-form{background:white;border-radius:14px;padding:26px;margin-bottom:20px;border:1px solid #e5e9ef;box-shadow:0 6px 24px #071a3310}
+h2,h3{color:#071a33}
+h2{font-size:26px;margin:0 0 8px}
+h3{font-size:21px}
+p.note,.notice{font-size:14px;color:#526378}
+label{display:block;font-weight:700;margin:16px 0 6px}
+input{font:inherit;width:100%;padding:13px;border:1px solid #a9b5c6;border-radius:8px}
+button{font:inherit;cursor:pointer;border:0;background:#071a33;color:white;border-radius:8px;padding:13px 18px;font-weight:700;margin:16px 10px 0 0}
+button.primary{background:#d71920;color:white}
+button:disabled{opacity:.5;cursor:wait}
+.admin-item{background:white;border:1px solid #e0e5ed;border-radius:12px;padding:18px;margin:12px 0}
+.admin-item p{white-space:pre-wrap}
+.admin-small{padding:10px 14px;font-size:14px}
+#loginMessage,#uploadMessage{font-weight:700}
+footer{max-width:880px;margin:25px auto;padding:0 16px;color:#526378;font-size:13px}
+</style>
+</head>
+<body>
+<header><h1>MR. ZEE CONSTRUCTIONS</h1><p>Private Owner Dashboard</p><a href="/">← Back to website</a></header>
+<main>
+<section class="panel" aria-labelledby="ownerTitle"><h2 id="ownerTitle">Manage Your Website</h2>
+<p>Sign in to upload project photos or videos and approve customer reviews. Only the authorised owner can make changes.</p></section>
+<section id="admin">
+<div id="adminLogin" class="admin-form">
+<h3>Owner Sign In</h3>
+<form id="adminLoginForm">
+<label for="adminEmail">Email address</label><input id="adminEmail" type="email" autocomplete="username" required>
+<label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password" minlength="10" required>
+<button class="primary" type="submit">Sign In</button>
+<button id="adminRegister" type="button">Create Owner Login</button>
+<p class="notice">First time? Enter your email and a strong password, then select Create Owner Login. Confirm your email if requested. Your account must also receive owner permission before it can manage the site. Never share your password.</p>
+<p id="loginMessage" role="status"></p>
+</form></div>
+<div id="adminPanel" hidden>
+<div class="panel"><button id="adminLogout">Sign Out</button>
+<h3>Upload a Photo or Video</h3>
+<form id="mediaUploader">
+<label for="mediaTitle">Project title</label>
+<input id="mediaTitle" minlength="2" maxlength="100" placeholder="e.g. Bathroom renovation – Southampton" required>
+<label for="mediaFile">Choose a photo or video from your phone</label>
+<input id="mediaFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm" required>
+<p class="notice">JPG, PNG, WEBP, GIF, MP4 or WEBM. Up to 50 MB per file (your storage plan may have smaller limits). Short, compressed videos are best.</p>
+<button class="primary" id="uploadButton" type="submit">Upload &amp; Publish</button><p id="uploadMessage" role="status"></p>
+</form></div>
+<div class="panel"><h3>Customer Reviews Pending Approval</h3><div id="pendingReviews"></div></div>
+<div class="panel"><h3>Manage Photos and Videos</h3><div id="adminGalleryList"></div>
+<p class="notice">Existing Gallery photos added directly via GitHub are separate and will not appear in this management list.</p></div>
+</div>
+</section>
+<!-- Hidden container elements shared with the public-page script. -->
+<div id="liveReviews" hidden></div><div id="liveGallery" hidden></div><p id="noReviews" hidden></p><p id="reviewUnavailable" hidden></p><p id="reviewStatus" hidden></p>
+</main>
+<footer>Only you can sign in as the authorised website owner. Customer reviews stay pending until approved. <a href="/">Return to Mr Zee Constructions</a></footer>
+</body>
+</html>
