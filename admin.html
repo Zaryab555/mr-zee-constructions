@@ -32,6 +32,11 @@ button:disabled{opacity:.5;cursor:wait}
 .admin-item p{white-space:pre-wrap}
 .admin-small{padding:10px 14px;font-size:14px}
 #loginMessage,#uploadMessage{font-weight:700}
+.media-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:10px;margin:15px 0}
+.media-preview figure{margin:0;background:#f1f5f9;border-radius:9px;overflow:hidden}
+.media-preview img,.media-preview video{width:100%;height:95px;object-fit:cover}
+.media-preview figcaption{font-size:11px;padding:6px;overflow-wrap:anywhere}
+#uploadFileResults p{margin:6px 0;overflow-wrap:anywhere}
 footer{max-width:880px;margin:25px auto;padding:0 16px;color:#526378;font-size:13px}
 </style>
 </head>
@@ -53,14 +58,14 @@ footer{max-width:880px;margin:25px auto;padding:0 16px;color:#526378;font-size:1
 </form></div>
 <div id="adminPanel" hidden>
 <div class="panel"><button id="adminLogout">Sign Out</button>
-<h3>Upload a Photo or Video</h3>
+<h3>Upload Project Photos &amp; Videos Together</h3>
 <form id="mediaUploader">
 <label for="mediaTitle">Project title</label>
-<input id="mediaTitle" minlength="2" maxlength="100" placeholder="e.g. Bathroom renovation – Southampton" required>
-<label for="mediaFile">Choose a photo or video from your phone</label>
-<input id="mediaFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm" required>
+<input id="mediaTitle" list="existingProjects" minlength="2" maxlength="100" placeholder="e.g. Bathroom renovation – Southampton" required><datalist id="existingProjects"></datalist><p class="notice">Use the same project name to add more photos or videos to an existing project.</p>
+<label for="mediaFile">Choose multiple photos and videos from your phone</label>
+<input id="mediaFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm" multiple required>
 <p class="notice">JPG, PNG, WEBP, GIF, MP4 or WEBM. Up to 50 MB per file (your storage plan may have smaller limits). Short, compressed videos are best.</p>
-<button class="primary" id="uploadButton" type="submit">Upload &amp; Publish</button><p id="uploadMessage" role="status"></p>
+<div id="selectedMediaSummary" class="notice" role="status">No files selected yet.</div><div id="selectedMediaPreview" class="media-preview"></div><progress id="uploadProgress" hidden value="0" max="100" style="width:100%"></progress><button class="primary" id="uploadButton" type="submit">Upload All &amp; Publish</button><p id="uploadMessage" role="status"></p><div id="uploadFileResults" class="notice" aria-live="polite"></div>
 </form></div>
 <div class="panel"><h3>Customer Reviews Pending Approval</h3><div id="pendingReviews"></div></div>
 <div class="panel"><h3>Manage Photos and Videos</h3><div id="adminGalleryList"></div>
