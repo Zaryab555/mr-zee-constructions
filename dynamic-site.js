@@ -121,6 +121,14 @@ if(login)login.addEventListener('submit',async e=>{
  await syncAdmin();
  if(!admin)msg('loginMessage','This account does not have administrator permission.');
 });
+if($('adminRegister'))$('adminRegister').onclick=async()=>{
+ if(!client)return;
+ const email=$('adminEmail').value.trim(),password=$('adminPassword').value;
+ if(!email||password.length<10){msg('loginMessage','Enter your email and a password with at least 10 characters.');return;}
+ const {data,error}=await client.auth.signUp({email,password});
+ if(error){msg('loginMessage',error.message);return;}
+ msg('loginMessage',data.session?'Account created. Your account still needs owner access approval.':'Check your email to confirm your account. Owner approval will also be needed.');
+};
 if($('adminLogout'))$('adminLogout').onclick=async()=>{await client.auth.signOut();admin=false;await syncAdmin();};
 const uploader=$('mediaUploader');
 if(uploader)uploader.addEventListener('submit',async event=>{
