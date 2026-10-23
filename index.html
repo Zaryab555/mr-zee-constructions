@@ -40,6 +40,7 @@ footer{background:#031124;color:#fff}.foot{display:grid;grid-template-columns:1.
 @media(max-width:950px){.links,.phone{display:none}.menu{display:block}.links.open{display:flex;position:absolute;top:78px;left:0;right:0;background:#071a33;padding:22px;flex-direction:column}.hero-grid,.about-grid,.contact-grid,.estimator-grid{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.reviews-grid{grid-template-columns:1fr}.trust,.stat-grid{grid-template-columns:repeat(2,1fr)}.gallery-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.hero{padding:65px 0;min-height:auto}.hero h1{font-size:43px;letter-spacing:-1px}.actions,.cards,.trust,.stat-grid,.gallery-grid,.foot{grid-template-columns:1fr;display:grid}.stat-grid div{border-right:0;border-bottom:1px solid #ffffff55}}
 .project-group{margin:35px 0 45px}.project-heading{font-size:24px;color:#071a33;margin:0 0 16px}.project-media-grid{margin:0}.managed-media{margin:0;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 6px 24px #0001}.managed-media img,.managed-media video{display:block;width:100%;height:220px;object-fit:cover}.managed-media figcaption{padding:12px;font-weight:700}
+.album-list{display:grid;gap:20px}.project-album{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 8px 26px #06162d18}.project-album summary{display:flex;gap:18px;align-items:center;cursor:pointer;padding:15px;list-style:none}.project-album summary::-webkit-details-marker{display:none}.project-album summary img{width:145px;height:110px;object-fit:cover;border-radius:10px}.project-album summary span{display:grid;gap:5px}.project-album summary strong{font-size:23px;color:#071a33}.project-album summary small{font-size:14px;color:#596270}.album-arrow{margin-left:auto;font-weight:700;color:#d71920}.album-photos{padding:16px 18px 22px}.project-album .managed-media{margin:0}.project-album summary:focus-visible{outline:3px solid #d71920}@media(max-width:600px){.project-album summary img{width:100px;height:85px}.project-album summary strong{font-size:19px}.album-arrow{font-size:12px}}
 </style>
 <script src="site-config.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
@@ -83,30 +84,17 @@ footer{background:#031124;color:#fff}.foot{display:grid;grid-template-columns:1.
 
 <section class="section"><div class="wrap about-grid"><div><p style="color:#d71920;font-weight:900">WHY CHOOSE US?</p><h2>Trusted local construction services</h2><ul class="checks"><li>Experienced and dependable team</li><li>Clear communication from start to finish</li><li>Quality workmanship at competitive prices</li><li>Respectful, clean and friendly service</li><li>Free quotations and practical advice</li></ul></div><div class="panel"><h3>MR. ZEE CONSTRUCTIONS</h3><p>We help homeowners, landlords and property managers improve, repair and renovate their properties.</p><a class="btn wa" href="https://wa.me/447756618980" target="_blank">TEXT OR WHATSAPP US</a></div></div></section>
 
-<section id="gallery" class="section gallery"><div class="wrap"><div class="head"><p>OUR WORK</p><h2>PROJECT <span>GALLERY</span></h2><p>A selection of our recent construction and property improvement projects.</p></div><div class="gallery-grid">
-<div class="photo" style="background-image:url('project-1.jpg')"><span>Plastering Project</span></div>
-<div class="photo" style="background-image:url('project-3.jpg')"><span>Bathroom Renovation</span></div>
-<div class="photo" style="background-image:url('project-4.jpg')"><span>Exterior Painting</span></div>
-<div class="photo" style="background-image:url('project-6.jpg')"><span>Flooring Project</span></div>
-<div class="photo" style="background-image:url('project-7.jpg')"><span>Roof Repair</span></div>
-<div class="photo" style="background-image:url('project-8.jpg')"><span>Garden & Patio</span></div>
-  <div class="photo" style="background-image:url('images/dormer-loft/dormer-loft-01.jpg')"><span>Dormer Loft - Roof Preparation</span></div>
-
-<div class="photo" style="background-image:url('images/dormer-loft/dormer-loft-02.jpg')"><span>Dormer Loft - Structural Work</span></div>
-
-<div class="photo" style="background-image:url('images/dormer-loft/dormer-loft-03.jpg')"><span>Timber Frame Construction</span></div>
-
-<div class="photo" style="background-image:url('images/dormer-loft/dormer-loft-04.jpg')"><span>OSB Roof Decking</span></div>
-
-<div class="photo" style="background-image:url('images/dormer-loft/dormer-loft-05.jpg')"><span>Flat Roof Installation</span></div>
-
-<div class="photo" style="background-image:url('images/dormer-loft/dormer-loft-06.jpg')"><span>Roof Waterproof Membrane</span></div>
-
-<div class="photo" style="background-image:url('images/dormer-loft/dormer-loft-07.jpg')"><span>External Membrane & Battens</span></div>
-
-<div class="photo" style="background-image:url('images/dormer-loft/dormer-loft-08.jpg')"><span>Roof Detail & Finishing</span></div>
-</div><div id="liveGallery" style="margin-top:20px" aria-live="polite"></div></div></section>
-
+<section id="gallery" class="section gallery"><div class="wrap"><div class="head"><p>OUR WORK</p><h2>PROJECT <span>GALLERY</span></h2><p>Explore our work by project. Tap a project to view all its photos and videos.</p></div>
+<div id="projectAlbums" class="album-list">
+<details class="project-album"><summary><img src="project-1.jpg" alt="Painting project cover" loading="lazy"><span><strong>Painting</strong><small>6 project photos</small></span><span class="album-arrow">View photos ▾</span></summary><div class="gallery-grid album-photos">
+<div class="photo" style="background-image:url('project-1.jpg')"><span>Painting – View 1</span></div>
+<div class="photo" style="background-image:url('project-3.jpg')"><span>Painting – View 2</span></div>
+<div class="photo" style="background-image:url('project-4.jpg')"><span>Painting – View 3</span></div>
+<div class="photo" style="background-image:url('project-6.jpg')"><span>Painting – View 4</span></div>
+<div class="photo" style="background-image:url('project-7.jpg')"><span>Painting – View 5</span></div>
+<div class="photo" style="background-image:url('project-8.jpg')"><span>Painting – View 6</span></div></div></details>
+</div>
+<div id="liveGallery" aria-live="polite"></div></div></section>
 <section id="reviews" class="section"><div class="wrap">
  <div class="head"><p>CUSTOMER FEEDBACK</p><h2>OUR <span>REVIEWS</span></h2><p>Read customer feedback or share your experience.</p></div>
  <div id="liveReviews" class="reviews-grid" aria-live="polite"></div>
