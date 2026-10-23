@@ -123,24 +123,9 @@ footer{background:#031124;color:#fff}.foot{display:grid;grid-template-columns:1.
 
 <section id="contact" class="section contact"><div class="wrap contact-grid"><div><p style="color:#ffc400;font-weight:900">CONTACT MR. ZEE</p><h2>Get a free quotation</h2><p>Complete the form and it will open WhatsApp with your project details ready to send.</p><div class="details"><a href="tel:+447756618980">☎ 07756 618980</a><a href="mailto:mrzeeconstruction@gmail.com">✉ mrzeeconstruction@gmail.com</a><span>📍 Derby, DE21 4EQ</span><span>Serving Derby, Nottingham and surrounding areas</span></div></div>
 <form class="form" id="whatsappForm"><h3>GET A FREE QUOTE</h3><input id="customerName" placeholder="Your Name" required><input id="customerPhone" placeholder="Phone Number" required><input id="customerPostcode" placeholder="Your Postcode" required><select id="customerService" required><option value="">Select Service</option><option>Plastering</option><option>Bathroom Renovation</option><option>Kitchen Fitting</option><option>Painting & Decorating</option><option>Flooring</option><option>Roofing</option><option>Landscaping</option><option>General Repairs</option></select><textarea id="jobDetails" rows="5" placeholder="Tell us about your project" required></textarea><button type="submit">SEND BY WHATSAPP ➜</button></form></div></section>
-<section id="admin" class="section"><div class="wrap"><div class="head"><p>OWNER ACCESS</p><h2>GALLERY <span>MANAGEMENT</span></h2><p>Private owner dashboard for approving reviews and publishing photos or videos.</p></div>
-<div id="adminLogin" class="admin-form"><form id="adminLoginForm"><h3>Owner sign in</h3>
-<label for="adminEmail">Email</label><input id="adminEmail" type="email" autocomplete="username" required>
-<label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password" required>
-<button type="submit">Sign In</button><button id="adminRegister" type="button">Create Owner Login</button><p class="notice">Create your login using your own email and password. This will not grant admin access until the website owner account is verified and approved.</p><p id="loginMessage" role="status"></p></form></div>
-<div id="adminPanel" hidden><button id="adminLogout" class="admin-small">Sign Out</button>
-<h3>Upload Project Photo or Video</h3><form id="mediaUploader" class="admin-form">
-<label for="mediaTitle">Project title</label><input id="mediaTitle" minlength="2" maxlength="100" required placeholder="e.g. Southampton bathroom renovation">
-<label for="mediaFile">Photo or Video</label><input id="mediaFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm" required>
-<p class="notice">Supported: JPG, PNG, WEBP, GIF, MP4, WEBM. Maximum 50 MB. Short, compressed videos work best.</p>
-<button type="submit" id="uploadButton">Upload & Publish</button><p id="uploadMessage" role="status"></p></form>
-<h3>Pending Customer Reviews</h3><div id="pendingReviews"></div>
-<h3>Manage Uploaded Media</h3><div id="adminGalleryList"></div>
-<p class="notice">Existing pictures stored directly in GitHub are not managed here.</p>
-</div></div></section>
 </main>
 
-<footer><div class="wrap foot"><div><div class="logo"><span class="roof">⌂</span><span><b>MR. ZEE</b><small>CONSTRUCTIONS</small></span></div><p>Professional construction and property improvement services in Derby and Nottingham.</p></div><div><h4>QUICK LINKS</h4><a href="#home">Home</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a></div><div><h4>CONTACT US</h4><a href="tel:+447756618980">07756 618980</a><a href="mailto:mrzeeconstruction@gmail.com">mrzeeconstruction@gmail.com</a><span>DE21 4EQ, Derby</span></div></div><div class="copy">© <span id="year"></span> Mr. Zee Constructions. All rights reserved. <a href="#admin" style="color:white;font-size:12px;margin-left:10px">Owner Login</a></div></footer>
+<footer><div class="wrap foot"><div><div class="logo"><span class="roof">⌂</span><span><b>MR. ZEE</b><small>CONSTRUCTIONS</small></span></div><p>Professional construction and property improvement services in Derby and Nottingham.</p></div><div><h4>QUICK LINKS</h4><a href="#home">Home</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a></div><div><h4>CONTACT US</h4><a href="tel:+447756618980">07756 618980</a><a href="mailto:mrzeeconstruction@gmail.com">mrzeeconstruction@gmail.com</a><span>DE21 4EQ, Derby</span></div></div><div class="copy">© <span id="year"></span> Mr. Zee Constructions. All rights reserved.</div></footer>
 <a class="float" href="https://wa.me/447756618980" target="_blank" aria-label="WhatsApp">◉</a>
 <script>
 const menu=document.querySelector('.menu'),links=document.querySelector('.links');
