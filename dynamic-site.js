@@ -38,10 +38,14 @@ async function refreshPublic(){
   const grouped=new Map();
   for(const item of gal.data){if(!grouped.has(item.title))grouped.set(item.title,[]);grouped.get(item.title).push(item);}
   for(const [title,items] of grouped){
-   const section=node('section','project-group');
-   const heading=node('h3','project-heading',title+' · '+items.length+' photo/video'+(items.length!==1?'s':''));
-   const grid=node('div','gallery-grid project-media-grid');
-   grid.append(...items.map(mediaForItem));section.append(heading,grid);galleryEl.append(section);
+   const album=node('details','project-album');
+   const summary=node('summary');
+   const cover=items.find(x=>x.media_type==='image');
+   if(cover){const img=node('img');img.loading='lazy';img.alt=title+' project cover';img.src=client.storage.from('site-media').getPublicUrl(cover.file_path).data.publicUrl;summary.append(img);}
+   const name=node('span');name.append(node('strong','',title),node('small','',items.length+' photo/video'+(items.length===1?'':'s')));
+   summary.append(name,node('span','album-arrow','View project ▾'));
+   const grid=node('div','gallery-grid album-photos');grid.append(...items.map(mediaForItem));
+   album.append(summary,grid);galleryEl.append(album);
   }
  }catch(error){console.error(error);msg('reviewStatus','Unable to load recent updates right now.');}
 }
