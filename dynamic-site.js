@@ -34,7 +34,15 @@ async function refreshPublic(){
   if(rev.error)throw rev.error;if(gal.error)throw gal.error;
   const reviews=$('liveReviews');reviews.replaceChildren(...rev.data.map(cardForReview));
   show($('noReviews'),rev.data.length===0);
-  $('liveGallery').replaceChildren(...gal.data.map(mediaForItem));
+  const galleryEl=$('liveGallery');galleryEl.replaceChildren();
+  const grouped=new Map();
+  for(const item of gal.data){if(!grouped.has(item.title))grouped.set(item.title,[]);grouped.get(item.title).push(item);}
+  for(const [title,items] of grouped){
+   const section=node('section','project-group');
+   const heading=node('h3','project-heading',title+' · '+items.length+' photo/video'+(items.length!==1?'s':''));
+   const grid=node('div','gallery-grid project-media-grid');
+   grid.append(...items.map(mediaForItem));section.append(heading,grid);galleryEl.append(section);
+  }
  }catch(error){console.error(error);msg('reviewStatus','Unable to load recent updates right now.');}
 }
 const form=$('submitReview');
