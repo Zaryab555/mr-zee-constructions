@@ -55,6 +55,7 @@ if(form)form.addEventListener('submit',async event=>{
 if(!ready){
  show($('reviewUnavailable'),true);
  if(form)show(form,false);
+ show($('adminLogin'),false);
 }else{
  refreshPublic();
 }
