@@ -149,52 +149,126 @@ const maxFiles=30;
 const fileLimit=50*1024*1024;
 const types=['image/jpeg','image/png','image/webp','image/gif','video/mp4','video/webm'];
 const exts={'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif','video/mp4':'mp4','video/webm':'webm'};
-if(fileInput)fileInput.addEventListener('change',()=>{
- const files=Array.from(fileInput.files);
- const preview=$('selectedMediaPreview');if(preview)preview.replaceChildren();
- msg('selectedMediaSummary',files.length?files.length+' files selected ('+(files.reduce((n,f)=>n+f.size,0)/1048576).toFixed(1)+' MB total). Max '+maxFiles+' files per batch.':'No files selected yet.');
- for(const file of files.slice(0,30)){
-  const fig=node('figure');const caption=node('figcaption','',file.name);
+let mediaBatch=[];
+let batchTitle='';
+let uploadBusy=false;
+
+function reportSelectedFiles(){
+ const preview=$('selectedMediaPreview');
+ if(preview)preview.replaceChildren();
+ const count=mediaBatch.length;
+ msg('selectedMediaSummary',count?count+' selected: '+mediaBatch.filter(x=>x.done).length+' uploaded, '+mediaBatch.filter(x=>!x.done).length+' remaining.':'No files selected. Long-press to select multiple photos from your phone.');
+ for(const entry of mediaBatch.slice(0,maxFiles)){
+  const file=entry.file;
+  const fig=node('figure'); const cap=node('figcaption','',file.name);
   if(types.includes(file.type)){
    const visual=node(file.type.startsWith('video/')?'video':'img');
-   const url=URL.createObjectURL(file);visual.src=url;
+   const u=URL.createObjectURL(file);
+   visual.src=u;
    if(visual.tagName==='VIDEO'){visual.muted=true;visual.preload='metadata';}
-   visual.addEventListener('load',()=>URL.revokeObjectURL(url),{once:true});
-   visual.addEventListener('loadedmetadata',()=>URL.revokeObjectURL(url),{once:true});
+   visual.addEventListener('load',()=>URL.revokeObjectURL(u),{once:true});
+   visual.addEventListener('error',()=>URL.revokeObjectURL(u),{once:true});
+   visual.addEventListener('loadedmetadata',()=>URL.revokeObjectURL(u),{once:true});
    fig.append(visual);
   }
-  fig.append(caption);preview?.append(fig);
+  fig.append(cap);preview?.append(fig);
  }
+}
+if(fileInput)fileInput.addEventListener('change',()=>{
+ mediaBatch=Array.from(fileInput.files).map(file=>({file,done:false,path:'',error:''}));
+ batchTitle='';
+ reportSelectedFiles();
+ const progress=$('uploadProgress');if(progress){progress.hidden=true;progress.value=0;}
+ const results=$('uploadFileResults');if(results)results.replaceChildren();
+ msg('uploadMessage',mediaBatch.length>1?'Selected '+mediaBatch.length+' files. Keep this page open until every upload is confirmed.':'');
+ const button=$('uploadButton');if(button)button.textContent='Upload All & Publish';
 });
+
+// Using one permanent file path per selected file avoids creating duplicates when
+// the user retries an interrupted batch on the same page.
+async function publishOneMedia(entry,title){
+ const file=entry.file;
+ if(!entry.path){
+  const kind=file.type.startsWith('video/')?'video':'image';
+  entry.path=(kind==='video'?'videos/':'photos/')+crypto.randomUUID()+'.'+exts[file.type];
+ }
+ // An earlier attempt could have succeeded even if the phone lost the response.
+ const already=await client.from('gallery_media').select('id').eq('file_path',entry.path).maybeSingle();
+ if(already.error)throw already.error;
+ if(already.data)return;
+ const uploaded=await client.storage.from('site-media').upload(entry.path,file,{contentType:file.type,upsert:false});
+ if(uploaded.error&&!/already exists|duplicate|resource exists|409/i.test(uploaded.error.message||''))throw uploaded.error;
+ const type=file.type.startsWith('video/')?'video':'image';
+ const inserted=await client.from('gallery_media').insert({title,file_path:entry.path,media_type:type});
+ if(inserted.error){
+  const check=await client.from('gallery_media').select('id').eq('file_path',entry.path).maybeSingle();
+  if(check.error||!check.data)throw inserted.error;
+ }
+ const verified=await client.from('gallery_media').select('id').eq('file_path',entry.path).maybeSingle();
+ if(verified.error)throw verified.error;
+ if(!verified.data)throw Error('File upload not confirmed in the gallery database.');
+}
 if(uploader)uploader.addEventListener('submit',async event=>{
- event.preventDefault();if(!client||!admin)return;
- const files=Array.from(fileInput.files),title=$('mediaTitle').value.trim();
- if(!files.length||title.length<2||title.length>100){msg('uploadMessage','Choose files and enter a project title.');return;}
- if(files.length>maxFiles){msg('uploadMessage','Please select no more than '+maxFiles+' files per batch.');return;}
- const invalid=files.filter(f=>!types.includes(f.type)||f.size>fileLimit||f.size===0);
- if(invalid.length){msg('uploadMessage','Some files are unsupported, empty or over 50 MB: '+invalid.map(f=>f.name).join(', '));return;}
- const button=$('uploadButton'),progress=$('uploadProgress'),results=$('uploadFileResults');
- button.disabled=true;fileInput.disabled=true;progress.hidden=false;progress.max=files.length;progress.value=0;
- results.replaceChildren();let successful=0;
- const failed=[];
+ event.preventDefault();
+ if(!client||!admin||uploadBusy)return;
+ const title=$('mediaTitle').value.trim();
+ if(!mediaBatch.length||title.length<2||title.length>100){
+  msg('uploadMessage','Enter a project title and select photos/videos first.');return;
+ }
+ if(mediaBatch.length>maxFiles){
+  msg('uploadMessage','Select no more than '+maxFiles+' files per batch.');return;
+ }
+ const invalid=mediaBatch.filter(x=>!types.includes(x.file.type)||x.file.size===0||x.file.size>fileLimit);
+ if(invalid.length){
+  msg('uploadMessage','Unsupported, empty or over-50-MB files: '+invalid.map(x=>x.file.name).join(', '));return;
+ }
+ if(batchTitle&&batchTitle!==title&&mediaBatch.some(x=>x.done)){
+  msg('uploadMessage','Please keep the project title "'+batchTitle+'" until this batch finishes.');return;
+ }
+ batchTitle=title;
+ const button=$('uploadButton'),progress=$('uploadProgress'),results=$('uploadFileResults'),titleInput=$('mediaTitle');
+ uploadBusy=true;button.disabled=true;fileInput.disabled=true;titleInput.disabled=true;
+ progress.hidden=false;progress.max=mediaBatch.length;progress.value=mediaBatch.filter(x=>x.done).length;
+ results.replaceChildren();
  try{
-  for(const file of files){
-   msg('uploadMessage','Uploading '+(successful+failed.length+1)+' of '+files.length+': '+file.name);
-   const kind=file.type.startsWith('video/')?'video':'image';
-   const path=(kind==='video'?'videos/':'photos/')+crypto.randomUUID()+'.'+exts[file.type];
-   try{
-    const {error:upErr}=await client.storage.from('site-media').upload(path,file,{contentType:file.type,upsert:false});
-    if(upErr)throw upErr;
-    const {error:dbErr}=await client.from('gallery_media').insert({title,file_path:path,media_type:kind});
-    if(dbErr){await client.storage.from('site-media').remove([path]);throw dbErr;}
-    successful++;results.append(node('p','','✓ '+file.name));
-   }catch(error){failed.push(file.name);results.append(node('p','','✗ '+file.name+': '+(error.message||'Upload failed')));}
-   progress.value=successful+failed.length;
+  for(let i=0;i<mediaBatch.length;i++){
+   const entry=mediaBatch[i];
+   if(entry.done){
+    results.append(node('p','','✓ Already uploaded: '+entry.file.name));
+    continue;
+   }
+   for(let attempt=1;attempt<=2;attempt++){
+    msg('uploadMessage','Uploading '+(i+1)+' of '+mediaBatch.length+': '+entry.file.name+(attempt===2?' (retrying)':''));
+    try{
+     await publishOneMedia(entry,batchTitle);
+     entry.done=true;entry.error='';
+     break;
+    }catch(error){
+     entry.error=error.message||'The connection was interrupted.';
+     if(attempt===1&&navigator.onLine){
+      await new Promise(resolve=>setTimeout(resolve,900));
+     }
+    }
+   }
+   const message=entry.done?'✓ '+entry.file.name:'✗ '+entry.file.name+': '+entry.error;
+   results.append(node('p','',message));
+   progress.value=mediaBatch.filter(x=>x.done).length;
+   reportSelectedFiles();
   }
-  msg('uploadMessage',successful+' of '+files.length+' files published'+(failed.length?'. '+failed.length+' failed. Retry those files separately.':'.'));
-  if(!failed.length){uploader.reset();fileInput.dispatchEvent(new Event('change'));}
+  const completed=mediaBatch.filter(x=>x.done).length,remaining=mediaBatch.length-completed;
+  if(remaining){
+   msg('uploadMessage',completed+' of '+mediaBatch.length+' confirmed. '+remaining+' not uploaded. Tap Retry Failed Files; successful files will not be uploaded twice.');
+   button.textContent='Retry Failed Files ('+remaining+')';
+  }else{
+   msg('uploadMessage','Success! All '+completed+' files are now saved in the "'+batchTitle+'" gallery folder.');
+   button.textContent='Upload All & Publish';
+  }
   await refreshAdmin();await refreshPublic();
- }finally{button.disabled=false;fileInput.disabled=false;}
-});
+ }catch(error){
+  msg('uploadMessage','Upload status could not be refreshed: '+(error.message||'Unknown error'));
+ }finally{
+  uploadBusy=false;button.disabled=false;fileInput.disabled=false;titleInput.disabled=false;
+ }
+}); 
 if(ready)syncAdmin();
 })();
