@@ -270,5 +270,5 @@ if(uploader)uploader.addEventListener('submit',async event=>{
   uploadBusy=false;button.disabled=false;fileInput.disabled=false;titleInput.disabled=false;
  }
 }); 
-if(ready)syncAdmin();
+if(ready && $('adminLoginForm'))syncAdmin();
 })();
