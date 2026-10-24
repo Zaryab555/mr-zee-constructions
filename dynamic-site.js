@@ -38,12 +38,24 @@ async function refreshPublic(){
   const grouped=new Map();
   for(const item of gal.data){if(!grouped.has(item.title))grouped.set(item.title,[]);grouped.get(item.title).push(item);}
   for(const [title,items] of grouped){
+   // Merge uploaded Painting images with the existing Painting album.
+   const normalized=title.trim().toLowerCase();
+   const existing=normalized==='painting'||normalized==='painting & decorating'
+      ? document.querySelector('[data-project-title="Painting"]') : null;
+   if(existing){
+    const grid=existing.querySelector('.album-photos');
+    grid.append(...items.map(mediaForItem));
+    const count=existing.querySelector('.album-count');
+    const total=grid.children.length;
+    if(count)count.textContent=total+' photos/videos';
+    continue;
+   }
    const album=node('details','project-album');
    const summary=node('summary');
    const cover=items.find(x=>x.media_type==='image');
    if(cover){const img=node('img');img.loading='lazy';img.alt=title+' project cover';img.src=client.storage.from('site-media').getPublicUrl(cover.file_path).data.publicUrl;summary.append(img);}
-   const name=node('span');name.append(node('strong','',title),node('small','',items.length+' photo/video'+(items.length===1?'':'s')));
-   summary.append(name,node('span','album-arrow','View project ▾'));
+   const name=node('span');name.append(node('strong','',title),node('small','',items.length+' photos/videos'));
+   summary.append(name,node('span','album-arrow','View project ↓'));
    const grid=node('div','gallery-grid album-photos');grid.append(...items.map(mediaForItem));
    album.append(summary,grid);galleryEl.append(album);
   }
