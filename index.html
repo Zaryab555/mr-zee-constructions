@@ -10,7 +10,7 @@
 <meta property="og:title" content="Mr. Zee Constructions">
 <meta property="og:description" content="Professional construction and property improvement services in Derby and Nottingham.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#132033">
+<meta name="theme-color" content="#101e31">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -24,11 +24,145 @@
 }
 </script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="site-config.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
 <script src="dynamic-site.js" defer></script>
 
 <style>
+/* Premium navy-and-champagne refresh — intentionally restrained, never flashy */
+:root{
+  --navy:#101e31;--ink:#1b2a3c;--muted:#5d6a79;
+  --line:#d5dbe1;--soft:#e9edf1;--accent:#c49a5a;--white:#ffffff;
+  --champagne:#f0d09a;--gold-deep:#996b32;
+}
+body{font-family:"Manrope",Arial,Helvetica,sans-serif;background:#eef1f3;color:var(--ink);font-weight:500}
+h1,h2,h3,.brand-text strong{font-family:"Manrope",Arial,Helvetica,sans-serif}
+h1,h2,h3{font-weight:800;letter-spacing:-.045em}
+.eyebrow{font-weight:800;letter-spacing:.19em;color:var(--gold-deep)}
+a,button{ -webkit-tap-highlight-color:transparent}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+/* Structured, confident dark navigation */
+.topline{background:#081422;border-bottom:1px solid #314050;color:#e4d5c1}
+.topline a{color:var(--champagne)}
+.site-header{background:linear-gradient(110deg,#14253b 0%,#0c1828 100%);border-bottom:1px solid rgba(240,208,154,.24);box-shadow:0 8px 28px rgba(7,18,33,.16)}
+.brand{color:#fff}.brand-text strong{font-size:19px;font-weight:900;letter-spacing:.045em}
+.brand-text small{color:var(--champagne);font-size:10px;font-weight:800;letter-spacing:.2em}
+.brand-emblem{width:46px;height:46px;background:linear-gradient(142deg,#e5bd7d,#af7b3d);color:#112038;border:1px solid #ffe1a7;border-bottom:3px solid #7b5229;box-shadow:0 4px 18px rgba(206,163,101,.18);font-family:Georgia,serif}
+.links a{color:#e7eaf0;font-weight:800;font-size:13px;transition:color .2s ease}
+.links a:hover,.links a:focus-visible{color:#f1ca8e}
+.nav-cta{background:linear-gradient(115deg,#f1d5a6 0%,#c79a5b 52%,#ad773b 100%);border:1px solid rgba(255,224,175,.8);color:#101e31;box-shadow:0 7px 18px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.55);font-weight:900;transition:transform .25s,box-shadow .25s}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 12px 23px rgba(0,0,0,.24)}
+/* Editorial hero — dramatic and warm rather than white-on-white */
+.hero{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 22% 25%,rgba(72,100,128,.35),transparent 42%),radial-gradient(ellipse at 89% 95%,rgba(192,148,84,.19),transparent 38%),linear-gradient(125deg,#0c1929 8%,#1c334d 80%,#142137)}
+.hero:before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.025) 47%,transparent 62%);pointer-events:none}
+.hero-grid{position:relative;z-index:1;min-height:620px;gap:32px;align-items:center}
+.hero-content{padding:94px 0 94px 0}
+.hero .eyebrow{display:inline-flex;align-items:center;color:var(--champagne);font-size:12px;letter-spacing:.17em}
+.hero .eyebrow:before{content:"";width:29px;height:2px;background:linear-gradient(90deg,#a57739,#f9d59b);margin-right:12px}
+.hero h1{color:#fff;font-size:clamp(45px,5.5vw,75px);line-height:1.1;letter-spacing:-.058em;text-shadow:0 6px 35px rgba(0,0,0,.2);margin:24px 0}
+.hero h1 em{color:var(--champagne);font-weight:900;background:linear-gradient(130deg,#fbe2b6 15%,#d4a65e 58%,#f5ca84 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:#d9e0e7;line-height:1.85;max-width:550px;font-size:16px;font-weight:500}
+.hero .hero-location{color:#dccbab!important;font-size:13px!important;letter-spacing:.02em;font-weight:700}
+.hero-visual{margin:32px 0;min-height:490px;border:8px solid rgba(255,255,255,.07);border-radius:2px;box-shadow:0 24px 70px rgba(0,0,0,.38),0 0 0 1px rgba(240,208,154,.24);background:#2b3847}
+.hero-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,29,44,0) 60%,rgba(10,20,35,.58));pointer-events:none}
+.hero-visual img{filter:saturate(.92) contrast(1.04)}
+.hero-caption{z-index:2;bottom:20px;left:20px;background:linear-gradient(100deg,rgba(18,34,53,.96),rgba(22,38,54,.9));border-left:3px solid var(--champagne);box-shadow:0 7px 25px #0004;color:#fff;letter-spacing:.09em;padding:13px 16px;font-weight:800}
+.actions{gap:13px;margin:34px 0 25px}
+.btn{position:relative;overflow:hidden;border-radius:4px;font-weight:900;letter-spacing:.01em;transition:transform .22s ease,box-shadow .22s ease,background .22s ease}
+.btn-dark{background:linear-gradient(125deg,#f4d7a5 0%,#d9ac6c 52%,#b7803e 100%);color:#102033;border:1px solid #f3d7a5;box-shadow:0 12px 28px rgba(8,16,26,.3),inset 0 1px rgba(255,255,255,.7)}
+.btn-dark:before,.nav-cta:before{content:"";position:absolute;top:0;bottom:0;left:-65%;width:36%;transform:skew(-24deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transition:left .6s ease;pointer-events:none}
+.btn-dark:hover:before,.nav-cta:hover:before{left:130%}
+.btn-dark:hover{transform:translateY(-3px);box-shadow:0 18px 36px rgba(0,0,0,.38)}
+.btn-light{border:1px solid rgba(236,213,180,.68);color:#f4e6d0;background:rgba(255,255,255,.045);box-shadow:inset 0 1px rgba(255,255,255,.06)}
+.btn-light:hover{transform:translateY(-3px);background:rgba(255,255,255,.12)}
+/* Rich but airy service panels */
+.services{background:linear-gradient(170deg,#f2f0eb 0%,#e7edf1 100%)}
+.heading{margin-bottom:43px}.heading h2{font-family:"Manrope",Arial,sans-serif;font-weight:900;letter-spacing:-.056em;color:#11243a;font-size:clamp(34px,4.15vw,55px);line-height:1.14}
+.heading p{font-size:15px;line-height:1.8;color:#5a6572;font-weight:550}
+.service-grid{border:0;background:transparent;gap:19px}
+.service-card{position:relative;overflow:hidden;background:linear-gradient(155deg,#fff 3%,#f6f6f3 100%);border:1px solid rgba(32,49,67,.10);border-radius:7px;padding:32px 27px;min-height:218px;box-shadow:0 10px 25px rgba(26,46,67,.08),0 2px 5px rgba(26,46,67,.04);transition:transform .25s,box-shadow .25s,background .25s}
+.service-card:before{content:"";position:absolute;inset:0 auto auto 0;height:4px;width:100%;background:linear-gradient(90deg,#976d3d,#f1d49f 55%,#c39959)}
+.service-card:after{content:"";position:absolute;right:-30px;bottom:-60px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(217,182,127,.12),transparent 68%);pointer-events:none}
+.service-card:hover{transform:translateY(-6px);background:linear-gradient(145deg,#fffdf9,#fff);box-shadow:0 19px 38px rgba(18,38,62,.15)}
+.service-num{color:#996b32;font-weight:900;letter-spacing:.15em}
+.service-card h3{font-size:21px;font-weight:850;color:#13243a;letter-spacing:-.035em;margin:21px 0 11px}
+.service-card p{font-size:14px;color:#566575;line-height:1.72}
+/* Projects feel like a curated portfolio */
+.projects{background:linear-gradient(135deg,#14263b 0%,#0e1c2e 100%);position:relative}
+.projects .heading .eyebrow{color:#e4bd80}
+.projects .heading h2{color:#fff}
+.projects .heading p{color:#c4cfda}
+.project-album{background:#f5f5f3;border:1px solid rgba(218,184,132,.32);border-radius:8px;box-shadow:0 15px 34px rgba(0,0,0,.19);transition:transform .2s ease,box-shadow .2s ease}
+.project-album:hover{transform:translateY(-3px);box-shadow:0 22px 45px rgba(0,0,0,.27)}
+.project-album summary{padding:17px 20px}
+.project-album summary>img{border-radius:4px;border:2px solid #fff;box-shadow:0 5px 15px #0002}
+.project-album summary strong{font-size:23px;font-weight:900;letter-spacing:-.045em}
+.project-album summary small{font-weight:600}
+.album-arrow{background:#eadbc4;border:1px solid #d6bd97;color:#694722;border-radius:3px;padding:9px 12px}
+.project-album[open] .album-arrow{background:#e6cda5}
+.gallery-photo,.managed-media{border-radius:4px;box-shadow:0 7px 17px rgba(0,0,0,.07)}
+.gallery-photo img,.managed-media img{transition:transform .45s ease}
+.gallery-photo:hover img,.managed-media:hover img{transform:scale(1.035)}
+/* About section introduces breathing room while keeping visual weight */
+.about{background:linear-gradient(155deg,#ecece8 0%,#f6f2ec 72%,#e5e9ed 100%)}
+.about h2{font-size:clamp(35px,4.5vw,55px);font-weight:900;line-height:1.17;color:#10243a;letter-spacing:-.052em}
+.about .eyebrow{color:#986c3b}
+.about p{font-size:15px;line-height:1.9;color:#526174}
+.about-picture{position:relative;padding:0 15px 15px 0}
+.about-picture:after{content:"";position:absolute;inset:25px 0 0 25px;border:2px solid #b48b54;z-index:0}
+.about-picture img{position:relative;z-index:1;box-shadow:0 20px 50px rgba(30,42,55,.17);border-radius:4px}
+.about-note{border-top:1px solid #c6c8c7}
+.about-note strong{font-size:17px;font-weight:900}
+/* Credible testimonials without excessive visuals */
+.reviews{background:linear-gradient(145deg,#dce5eb 0%,#f2f2ef 82%)}
+.review{position:relative;border:1px solid #d4dbe0;border-radius:7px;padding:30px;box-shadow:0 12px 29px rgba(22,40,59,.09);background:linear-gradient(160deg,#fff,#faf9f7)}
+.review:before{content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:linear-gradient(90deg,#aa824c,#f0d3a4)}
+.review .stars{color:#b38648;font-size:19px}
+.review p{font-size:15px;line-height:1.85}
+.review strong{font-weight:900;color:#1b3046}
+.review-disclosure{max-width:750px;border-radius:6px;box-shadow:0 7px 24px #10253b13;overflow:hidden}
+.review-disclosure summary{font-weight:900;font-size:15px;background:#fdfbf7}
+/* Dark, intentional contact finish */
+.contact{background:radial-gradient(ellipse at 84% 20%,rgba(203,158,94,.17),transparent 45%),linear-gradient(125deg,#0a1929 0%,#192e46 100%)}
+.contact h2{font-size:clamp(36px,4.5vw,55px);font-weight:900;letter-spacing:-.055em}
+.contact-info a,.contact-info span{font-weight:750;color:#eee5d7}
+.quote-form{background:linear-gradient(155deg,#fffdf9,#f3f3f0);border:1px solid rgba(255,219,164,.43);border-radius:8px;box-shadow:0 20px 60px #050e1c66}
+.quote-form h3{font-family:"Manrope",Arial,sans-serif;font-size:27px;letter-spacing:-.045em;font-weight:900}
+.quote-form label{font-size:12px;letter-spacing:.01em}
+.quote-form input,.quote-form select,.quote-form textarea{border-radius:3px;border:1px solid #c7cdd3;background:#fff;transition:border-color .2s,box-shadow .2s}
+.quote-form input:focus,.quote-form select:focus,.quote-form textarea:focus{border-color:#b58a50;box-shadow:0 0 0 2px #c59b5b26}
+.quote-form button{background:linear-gradient(120deg,#f3d39a,#bc8748);color:#111e2c;border:1px solid #e4c294;border-radius:4px;font-weight:900;box-shadow:0 8px 22px #b27f4929;transition:transform .2s,box-shadow .2s}
+.quote-form button:hover{transform:translateY(-2px);box-shadow:0 12px 25px #b27f4940}
+footer{background:#071321}
+.footer-content{padding:39px 0}
+.copyright{border-top-color:#263c52}
+.float-wa{background:linear-gradient(135deg,#2eae73,#177e4f);font-weight:900;border:2px solid #fff8;box-shadow:0 12px 30px #0006}
+.float-wa:hover{transform:translateY(-2px)}
+@media(max-width:1050px){.hero h1{font-size:clamp(43px,5.6vw,66px)}.hero-grid{min-height:550px}.hero-visual{min-height:400px}}
+@media(max-width:760px){
+ .site-header{background:#112237}.menu{color:#f2d5a7;background:#1b3047;border-color:#516075;border-radius:3px}
+ .links{background:#12263c;border-top:1px solid #4a5567}.links a{color:#f3f3f3;border-bottom:1px solid #3b4b5e}
+ .hero-grid{gap:0}.hero-content{padding:71px 0 35px}
+ .hero h1{font-size:clamp(41px,9vw,63px)}.hero-visual{min-height:320px;margin:10px 0 42px}
+ .service-grid{gap:13px}.service-card{min-height:207px;padding:25px 21px}.projects .heading p{color:#c6d2de}
+ .about-picture:after{inset:18px 0 0 18px}
+}
+@media(max-width:520px){
+ .brand-text strong{font-size:17px}.brand-emblem{width:42px;height:42px}
+ .hero h1{font-size:clamp(39px,10vw,48px)}.hero-content{padding:61px 0 31px}.hero-visual{min-height:260px;margin-bottom:30px;border-width:5px}
+ .section{padding:66px 0}.heading h2{font-size:35px}
+ .service-card{min-height:auto}.project-album summary{padding:12px}.project-album summary strong{font-size:17px}
+ .album-arrow{font-size:11px;padding:6px}.about h2{font-size:35px}.quote-form{padding:22px}
+}
+@media(prefers-reduced-motion:reduce){
+ .btn,.nav-cta,.service-card,.project-album,.gallery-photo img,.managed-media img,.quote-form button{transition:none!important;transform:none!important}
+ .btn-dark:before{display:none}
+}
+
+
 :root{--navy:#132033;--ink:#1c2735;--muted:#627083;--line:#dce3ea;--soft:#f5f7f8;--accent:#b78643;--white:#fff}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#fff;line-height:1.62}
 a{color:inherit}button,input,select,textarea{font:inherit}.wrap{width:min(1160px,91%);margin:0 auto}
