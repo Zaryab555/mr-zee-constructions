@@ -35,6 +35,12 @@ async function refreshPublic(){
   const reviews=$('liveReviews');reviews.replaceChildren(...rev.data.map(cardForReview));
   show($('noReviews'),rev.data.length===0);
   const galleryEl=$('liveGallery');galleryEl.replaceChildren();
+  const staticPainting=document.querySelector('[data-project-title="Painting"]');
+  if(staticPainting){
+   staticPainting.querySelectorAll('.album-photos > .managed-media').forEach(el=>el.remove());
+   const count=staticPainting.querySelector('.album-count');
+   if(count)count.textContent=staticPainting.querySelectorAll('.album-photos > *').length+' photos';
+  }
   const grouped=new Map();
   for(const item of gal.data){if(!grouped.has(item.title))grouped.set(item.title,[]);grouped.get(item.title).push(item);}
   for(const [title,items] of grouped){
